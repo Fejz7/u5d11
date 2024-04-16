@@ -2,10 +2,13 @@ package project.u5d11.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 @Data
 @Table(name = "employees")
+
+
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +18,10 @@ public class Employee {
     private String lastName;
     private String email;
     private String profileImage;
+    private String password;
 
-    public Employee(String username, String name, String surname, String email) {
-        this.username = username;
-        this.firstName = name;
-        this.lastName = surname;
-        this.email = email;
+    public void setPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
     }
 }
